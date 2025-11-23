@@ -1,0 +1,21 @@
+stages:
+  download:
+    cmd: python data/download.py data/raw_data/raw.csv
+    deps:
+      - data/download.py
+    outs:
+      - data/raw_data/raw.csv
+
+  split:
+    cmd: python src/data/split.py --input data/raw_data/raw.csv --output data/processed --params params.yaml
+    deps:
+      - src/data/split.py
+      - data/raw_data/raw.csv
+    outs:
+     - data/processed/X_train.csv
+     - data/processed/X_test.csv
+     - data/processed/y_train.csv
+     - data/processed/y_test.csv
+    params:
+     - split.test_size
+     - split.random_state
