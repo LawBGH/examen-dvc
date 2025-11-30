@@ -1,0 +1,36 @@
+seed: 42
+
+split:
+  test_size: 0.2
+  random_state: 42
+  target: silica_concentrate
+
+dataset:
+  raw_csv: data/raw_data/raw.csv
+  X_train: data/processed/X_train.csv
+  y_train: data/processed/y_train.csv
+  X_test: data/processed/X_test.csv
+  y_test: data/processed/y_test.csv
+  X_train_scaled: data/processed/X_train_scaled.csv
+  predictions: data/processed/predictions.csv
+
+model:
+  type: GradientBoostingRegressor
+  base_params:
+    random_state: 42
+
+grid_search:
+  cv: 5
+  scoring: neg_mean_squared_error
+  n_jobs: -1
+  refit: true
+  param_grid:
+    n_estimators: [50, 100, 150]
+    max_depth: [5, 10, 15]
+    learning_rate: [0.01, 0.1, 0.2]
+
+paths:
+  metrics_dir: metrics
+  models_dir: models
+  reports_dir: reports
+  scaler_path: models/scaler.pkl
